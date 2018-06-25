@@ -25,5 +25,31 @@
   <%= @user.dob %>
 </p>
 
+<%= link_to 'Create New Post', new_user_post_path(@user) %> |
 <%= link_to 'Edit', edit_user_path(@user) %> |
 <%= link_to 'Back', users_path %>
+
+<table>
+  <thead>
+    <th>Post ID</th>
+    <th>User Name</th>
+    <th>Message</th>
+    <th>User Id</th>
+    <th colspan="3"></th>
+  </thead>
+  <tbody>
+    <% @posts.each do |post| %>
+      <% if (post.user.id == @user.id) %>
+        <tr>
+          <td><%= post.id %></td>
+          <td><%= post.user.first_name %> <%= post.user.last_name %></td>
+          <td><%= post.message %></td>
+          <td><%= post.user_id %></td>
+          <td><%= link_to 'Show', user_post_path(@user,post) %></td>
+          <td><%= link_to 'Edit', edit_user_post_path(@user,post) %></td>
+          <td><%= link_to 'Destroy', user_post_url(@user,post), method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        </tr>
+      <% end %>
+    <% end %>
+  </tbody>
+</table>
